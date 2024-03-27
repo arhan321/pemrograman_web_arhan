@@ -90,19 +90,25 @@ ctrl+x terus y terus enter
 - chmod 777 -R storage/*
 
 REST API LARAVEL:
+
 install lumen : 
+
 composer create-project --prefer-dist laravel/lumen nama-proyek-anda
 
 fix lumen jika lumen terkena masalah version : 
+
 composer require --with-all-dependencies flipbox/lumen-generator
 
 after composer lumen app.php :
+
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 install swagger:
+
 composer require "darkaonline/l5-swagger"
 
 vendor publish : 
+
 php artisan vendor:publish --provider "L5swagger\L5swaggerServiceProvider"
 
 
