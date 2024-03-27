@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+html{ 
+    scroll-behavior: smooth;
+}
+
+
+body {
+    background-color: rgb(142, 142, 142);
+}
+
+/* Navbar */
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: white !important; 
+}
+.navbar-toggler-icon {
+    color: #f5f5f5;
+}
+
+.nav-item {
+transition: 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3586ff;
+    border-radius: 5px;
+}
+
+
+
+.personal{
+    background-color: coral;
+    color: aliceblue;
+    border: 2px solid black;
+    margin: 20px;
+    padding: 20px;
+}
+
+.container_utama {
+    border: 5px solid #484848;
+    width: 80%;
+    margin: 55px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+.container_utama:hover {
+    transform: scale(1.05);
+    box-shadow: rgb(0, 97, 172) 10px 15px 10px;
+    background-color: #ffe0e0;
+}
+
+.profil {
+    padding: 20px;
+}
+
+.profil h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profil h2 {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.profil h3 {
+    font-size: 1em;
+}
+
+.halaman_selanjutnya {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.halaman_selanjutnya:hover {
+    background-color: #0056b3;
+    color: #f5f5f5;
+}
+
+.cards {
+    display: flex;
+    justify-content: center; 
+  }
+  
+ .card {
+    margin: 10px; 
+    width: 1rem; 
+    margin-bottom: 5%;
+  }
+
+
+

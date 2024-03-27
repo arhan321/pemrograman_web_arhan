@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+html{ 
+    scroll-behavior: smooth;
+}
+body {
+    background-color: rgb(142, 142, 142);
+}
+/* Navbar */
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: white !important; 
+}
+.navbar-toggler-icon {
+    color: #f5f5f5;
+}
+
+.nav-item {
+transition: 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: #3586ff;
+    border-radius: 5px;
+}
+
+.personal{
+    background-color: coral;
+    color: aliceblue;
+    border: 2px solid black;
+    margin: 20px;
+    padding: 20px;
+}
+
+.container_utama {
+    margin: 0 auto;
+    margin-top: 5em;
+    width: 40%; 
+    padding: 20px; 
+    border-radius: 10px; 
+    border: #5b5b5b 1px solid;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.3s ease-in-out; 
+    text-align: center; 
+    position: relative; 
+    overflow: hidden; 
+    transition: 0.3s ease-in-out;
+}
+
+.container_utama:hover {
+    transform: scale(1.05); 
+    box-shadow: #fff 10px 10px 15px;
+}
+
+.container_utama img {
+    width: 100%; 
+    border-radius: 10px; 
+    object-fit: cover; 
+}
+
+.container_utama h1 {
+    position: absolute; 
+    bottom: 20px; 
+    left: 0; 
+    width: 100%; 
+    margin: 0; 
+    color: #fff; 
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px; 
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; 
+}
+
+
+
+
+
+
