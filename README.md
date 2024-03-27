@@ -1,6 +1,7 @@
 web pemrogramming using freamwork laravel 
 
 CLI dasar untuk bekal :
+
 cd (masuk file)
 
 rm -r (hapus file)
