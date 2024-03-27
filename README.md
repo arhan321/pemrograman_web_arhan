@@ -2,42 +2,63 @@ web pemrogramming using freamwork laravel
 
 CLI dasar untuk bekal :
 cd (masuk file)
+
 rm -r (hapus file)
+
 mkdir (membuat file)
+
 cp -r (copy file)
+
 mv [namafile] to [namafile] (untuk mengganti nama file)
+
 mv [namafile] to direktory (mindahin file)
 
 CLI docker : 
 di dalam file yang ada docker-compose.yml nya silahkan up container nya (docker compose up -d --build)
+
 jika containernya ada masalah silahkan (docker compose down) (sekaligus jika ingin menghilangkan containernya)
+
 setelah itu (docker exec -it (nama container php nya) bash)
+
 setelah itu silahkan pada var/www/html nya generate composerr nya 
+
 and happy coding !!!!!!
 
 LARAVEL COMPOSER , BLUEPRINT AND REST API 
 
 composer create-project laravel/laravel .
+
 composer require -W --dev laravel-shift/blueprint
+
 untuk blueprint :
 - list nya : php artisan blueprint list
 
 - blueprint:build  Build components from a Blueprint draft
+- 
   blueprint:erase  Erase components created from last Blueprint build
+  
   blueprint:init   An alias for "blueprint:new" command
+  
   blueprint:new    Create a draft.yaml file and load existing models
+
   blueprint:stubs  Publish blueprint stubs
+  
   blueprint:trace  Create definitions for existing models to reference in new drafts
 
 setelah ini bisa langsung membuat draft.yml nya : 
+
 contoh nya : 
+
 models:
+
   Post:
+  
     title: string:400
     content: longtext
     published_at: nullable timestamp
 
 controllers:
+
   Post:
     index:
       query: all
