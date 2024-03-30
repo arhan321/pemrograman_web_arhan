@@ -78,15 +78,25 @@ controllers:
 - mv .env.example .env
 - nano .env 
 DB_CONNECTION=mysql
+
 DB_HOST=db
+
 DB_PORT=3306
+
 DB_DATABASE=implement
+
 DB_USERNAME=root
+
 DB_PASSWORD=p455w0rd
+
 ctrl+x terus y terus enter
+
 - php artisan key:generate
+- 
 - php artisan migrate
+- 
 - php artisan storage:link
+- 
 - chmod 777 -R storage/*
 
 REST API LARAVEL:
