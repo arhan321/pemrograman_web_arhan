@@ -1,0 +1,27 @@
+@startuml
+
+start
+
+:User masuk ke halaman reservasi;
+if (Apakah waktu akses > 10 malam?) then (Ya)
+  if (Apakah user bypass halaman web lewat header?) then (Ya)
+    :Tampilan error: Reservasi ditutup;
+    stop
+  else (Tidak)
+    :Tampilan error: Reservasi ditutup;
+    stop
+  endif
+else (Tidak)
+  :Tampilkan form reservasi;
+  :Nama lengkap;
+  :Nomor telepon;
+  :Jumlah orang;
+  :Email;
+  :Jam;
+  :Tanggal;
+  :User mengisi form dan submit;
+  :Arahkan ke halaman pembayaran;
+  stop
+endif
+
+@enduml
