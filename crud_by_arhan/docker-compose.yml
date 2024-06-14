@@ -1,0 +1,44 @@
+version: '3'
+services:
+  php_crud:
+    build: ./php
+    image: php:latest
+    container_name: php_crud
+    hostname: "php_pemweb"
+    volumes:
+      - ./api:/var/www/html
+      - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    working_dir: /var/www/html
+    depends_on: 
+      - mysql_crud
+
+  mysql_crud:
+    image: mariadb:10.2
+    container_name: mysql_crud
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33378:3306"
+    volumes:
+      - ./database/data:/var/lib/mysql
+      - ./conf.d:/etc/mysql/conf.d:ro
+    environment:
+      MYSQL_USER: Djony
+      MYSQL_PASSWORD: Djony!!
+      MYSQL_ROOT_PASSWORD: Djony
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql  
+    read_only: false
+
+  nginx_crud:
+    build: ./nginx
+    image: nginx:latest
+    container_name: nginx_crud
+    hostname: "nginx"
+    ports:
+      - "97:80"
+    volumes:
+      - ./api:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php_crud
