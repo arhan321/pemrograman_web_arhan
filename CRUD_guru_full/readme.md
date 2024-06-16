@@ -19,4 +19,10 @@ setelah migrate
 php artisan db:seed
 ```
 
+login default user
+```
+email :admin@admin.com
+password: password
+```
+
 Happy Codding!!!!!!!
