@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
@@ -16,7 +17,7 @@ class UserSeeder extends Seeder
         $timstamp = \Carbon\Carbon::now()->toDateString();
         DB::table('users')->insert([
             'username' => 'client',
-            'password' => 'cient',
+            'password' =>  hash::make('password'),
             'created_at' => $timstamp,
             'updated_at' => $timstamp,]);
     }

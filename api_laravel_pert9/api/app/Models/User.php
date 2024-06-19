@@ -10,4 +10,5 @@ class User extends Model
     // protected $table = 'users';
     protected $fillable = ['username', 'password'];
     // public $timestamps = false;
+    protected $hidden = ['password'];
 }
