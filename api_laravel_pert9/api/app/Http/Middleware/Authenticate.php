@@ -34,28 +34,59 @@ class Authenticate
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if ($this->auth->guard($guard)->guest()) {
-            if($request->has('password')){
-                $token = $request->header('Authorization')->exist();
-                $check_token = DB::connection('mysql')->table('users')->where('password', $token)->first();
 
-                if ($check_token == null){
-                    $res['success'] = false;
-                    $res['message'] = 'Permission Not Allowed';
+     public function handle($request, Closure $next, $guard = null)
+     {
+         if ($this->auth->guard($guard)->guest()) {
+             if ($request->has('password')) {
+                 $token = $request->header('Authorization');
+     
+                 if ($token) {
+                     $check_token = DB::connection('mysql')->table('users')->where('password', $token)->first();
+     
+                     if ($check_token == null) {
+                         $res['success'] = false;
+                         $res['message'] = 'Permission Not Allowed';
+     
+                         return response()->json($res, 403); 
+                     } else {
+                         $res['success'] = false;
+                         $res['message'] = 'Not Authorized';
+     
+                         return response()->json($res, 401); 
+                     }
+                 }
+             }
+     
+             return response('Unauthorized.', 401); 
+         }
+     
+         return $next($request);
+     }
+     
 
-                    return response($res);
-                }
-                else{
-                    $res['success'] = false;
-                    $res['message'] = 'Not Authorized';
-                    return response($res);
-                }
-            }
-            //return response('Unauthorized.', 401);
-        }
+    // public function handle($request, Closure $next, $guard = null)
+    // {
+    //     if ($this->auth->guard($guard)->guest()) {
+    //         if($request->has('password')){
+    //             $token = $request->header('Authorization')->exist();
+    //             $check_token = DB::connection('mysql')->table('users')->where('password', $token)->first();
 
-        return $next($request);
-    }
+    //             if ($check_token == null){
+    //                 $res['success'] = false;
+    //                 $res['message'] = 'Permission Not Allowed';
+
+    //                 return response($res);
+    //             }
+    //             else{
+    //                 $res['success'] = false;
+    //                 $res['message'] = 'Not Authorized';
+    //                 return response($res);
+    //             }
+    //         }
+    //         //return response('Unauthorized.', 401);
+    //     }
+
+    //     return $next($request);
+    // }
 }
