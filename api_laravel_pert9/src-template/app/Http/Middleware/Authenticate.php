@@ -17,33 +17,33 @@ class Authenticate extends Middleware
         return $request->expectsJson() ? null : route('login');
     }
     
-    // public function handle($request, Closure $next, ...$guards)
-    // {
-    //     if ($this->auth->guard($guards)->guest()) {
-    //         $token = $request->header('password'); 
+    public function handle($request, Closure $next, ...$guards)
+    {
+        if ($this->auth->guard($guards)->guest()) {
+            $token = $request->header('password'); 
     
-    //         if ($token) {
-    //             $check_token = DB::connection('mysql')
-    //                 ->table('users')
-    //                 ->where('password', $token)
-    //                 ->first();
+            if ($token) {
+                $check_token = DB::connection('mysql')
+                    ->table('users')
+                    ->where('password', $token)
+                    ->first();
     
-    //             if ($check_token === null) {
-    //                 $res['success'] = false;
-    //                 $res['message'] = 'Permission Not Allowed';
-    //                 return response()->json($res, 403);
-    //             }
-    //         } else {
-    //             $res['success'] = false;
-    //             $res['message'] = 'Not Authorized';
-    //             return response()->json($res, 401);
-    //         }
-    //     } else {
-    //         $res['success'] = false;
-    //         $res['message'] = 'Not Authorized';
-    //         return response()->json($res, 401);
-    //     }
+                if ($check_token === null) {
+                    $res['success'] = false;
+                    $res['message'] = 'Permission Not Allowed';
+                    return response()->json($res, 403);
+                }
+            } else {
+                $res['success'] = false;
+                $res['message'] = 'Not Authorized';
+                return response()->json($res, 401);
+            }
+        } else {
+            $res['success'] = false;
+            $res['message'] = 'Not Authorized';
+            return response()->json($res, 401);
+        }
     
-    //     return $next($request);
-    // }
+        return $next($request);
+    }
 }
