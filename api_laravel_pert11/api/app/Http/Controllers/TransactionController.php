@@ -20,23 +20,13 @@ class TransactionController extends Controller
         $transaction = DB::connection('mysql')->table('transactions')->get();
         return response()->json($transaction, 200);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -60,12 +50,7 @@ class TransactionController extends Controller
         return response()->json(['success' => true, 'message' => 'Transaction created successfully', 'transaction_id' => $storeID], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $transactions = DB::connection('mysql')->table('transaction')->where('id', $id)->first();
@@ -84,24 +69,12 @@ class TransactionController extends Controller
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit(Transaction $transaction)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
     
      public function update(Request $request, $id)
      {
@@ -134,12 +107,6 @@ class TransactionController extends Controller
          return response()->json($responseTrue, 200); 
      }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id) 
     {
         $transaction = DB::connection('mysql')->table('transactions')->where('id', $id)->first();
