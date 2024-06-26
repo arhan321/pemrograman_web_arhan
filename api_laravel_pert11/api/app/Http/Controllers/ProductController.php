@@ -34,10 +34,14 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
+            'price' => 'required|string',
+            'qty' => 'requiered',
         ]);
 
         DB::connection('mysql')->table('products')->insert([
-            'name' => $request->name,
+            'name' => $request->input('name'),
+            'price' =>$request->input('price'),
+            'qty' => $request->input('qty'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -108,7 +112,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id){
         $this->validate($request, [
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'price' => 'requiered',
+            'qty' => 'requiered'
         ]);
     
         $data = DB::connection('mysql')->table('products')->where('id', $id)->first();

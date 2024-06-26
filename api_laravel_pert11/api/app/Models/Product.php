@@ -8,6 +8,14 @@ class Product extends Model
 {
     protected $connection = 'mysql';
     protected $fillable = [
-        'name'
+        'name',
+        'price',
+        'qty',
     ];
-}
+
+    public function transaction()
+    {
+        return $this->hasMany(Product::class);
+    }
+}   
+   
