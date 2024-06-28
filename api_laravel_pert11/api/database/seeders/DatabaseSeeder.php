@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\models\Product;
+use App\Models\Customer;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -17,6 +18,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([UserSeeder::class,]);
-        $this->call([ProductSeeder::class,]);
+        $this->call([CustomerSeeder::class,]);
     }
 }

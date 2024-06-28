@@ -29,18 +29,22 @@ $router->group(['prefix' => 'api/v1/testing','middleware' => 'auth'], function()
     $router->get('/', ['uses' => 'UserController@index']);
 });
 
-$router->group(['prefix' => 'api/v1/product', 'middleware' => 'auth'], function() use ($router) {
-    $router->get('/', ['uses' => 'ProductController@index']);
-    $router->post('/', ['uses' => 'ProductController@store']);
-    $router->get('/{id}', ['uses' => 'ProductController@show']);
-    $router->put('/{id}', ['uses' => 'ProductController@update']);
-    $router->delete('/{id}', ['uses' => 'ProductController@destroy']);
+$router->group(['prefix' => 'api/v1/customers','middleware' => 'auth'], function() use ($router){
+    $router->get('/', ['uses' => 'CustomerController@index']);
 });
 
-$router->group(['prefix' => 'api/v1/transaction', 'middleware' => 'auth'], function() use ($router) {
-    $router->get('/', ['uses' => 'TransactionController@index']);
-    $router->post('/', ['uses' => 'TransactionController@store']);
-    $router->get('/{id}', ['uses' => 'TransactionController@show']);
-    $router->put('/{id}', ['uses' => 'TransactionController@update']);
-    $router->delete('/{id}', ['uses' => 'TransactionController@destroy']);
-});
+// $router->group(['prefix' => 'api/v1/product', 'middleware' => 'auth'], function() use ($router) {
+//     $router->get('/', ['uses' => 'ProductController@index']);
+//     $router->post('/', ['uses' => 'ProductController@store']);
+//     $router->get('/{id}', ['uses' => 'ProductController@show']);
+//     $router->put('/{id}', ['uses' => 'ProductController@update']);
+//     $router->delete('/{id}', ['uses' => 'ProductController@destroy']);
+// });
+
+// $router->group(['prefix' => 'api/v1/transaction', 'middleware' => 'auth'], function() use ($router) {
+//     $router->get('/', ['uses' => 'TransactionController@index']);
+//     $router->post('/', ['uses' => 'TransactionController@store']);
+//     $router->get('/{id}', ['uses' => 'TransactionController@show']);
+//     $router->put('/{id}', ['uses' => 'TransactionController@update']);
+//     $router->delete('/{id}', ['uses' => 'TransactionController@destroy']);
+// });
