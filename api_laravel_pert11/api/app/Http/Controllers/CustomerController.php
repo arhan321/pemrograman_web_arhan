@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class CustomerController extends Controller
     public function index()
     {
         $data = Customer::all();
-        if ($data->isEmpty()) {
+        if (!$data) {
             return response()->json(
                 [
                     'success' => false,
@@ -52,7 +53,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+        ]);
+
+        DB::connection('mysql')->table('customers')->insert([
+            'name' => $request->name,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'customers created successfully'], 201);
     }
 
     /**

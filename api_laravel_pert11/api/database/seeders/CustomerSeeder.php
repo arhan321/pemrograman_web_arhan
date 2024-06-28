@@ -20,6 +20,7 @@ class CustomerSeeder extends Seeder
             'email' => 'john@gmail.com',
             'phone_number' => '082112233',
             'created_at' => $timstamp,
-            'updated_at' => $timstamp,]);
+            'updated_at' => $timstamp,
+        ]);
     }
 }
