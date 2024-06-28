@@ -9,4 +9,8 @@ class Customer extends Model
     protected $connection = 'mysql';
     protected $table = 'customers';
     protected $fillable = ['full_name', 'username', 'email','phone_number'];
+
+    public function order() {
+        return $this->hasMany(Order::class);
+    }
 }

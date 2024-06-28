@@ -37,7 +37,9 @@ $router->group(['prefix' => 'api/v1/products','middleware' => 'auth'], function(
     $router->get('/', ['uses' => 'ProductController@index']);
 });
 
-
+$router->group(['prefix' => 'api/v1/order','middleware' => 'auth'], function() use ($router){
+    $router->get('/', ['uses' => 'OrderController@index']);
+});
 
 
 // $router->group(['prefix' => 'api/v1/product', 'middleware' => 'auth'], function() use ($router) {
