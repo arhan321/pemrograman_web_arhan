@@ -115,7 +115,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-      // Validasi input
+
     $this->validate($request, [
         'full_name' => 'sometimes|required|string',
         'username' => 'sometimes|required|string',
@@ -123,7 +123,6 @@ class CustomerController extends Controller
         'phone_number' => 'sometimes|required|string',
     ]);
 
-    // Cek apakah customer dengan id tertentu ada di database
     $customer = DB::connection('mysql')->table('customers')->where('id', $id)->first();
     
     if (is_null($customer)) {
@@ -133,7 +132,6 @@ class CustomerController extends Controller
         ], 404);
     }
 
-    // Siapkan data yang akan diupdate
     $updateData = [
         'full_name' => $request->input('full_name', $customer->full_name),
         'username' => $request->input('username', $customer->username),
@@ -142,13 +140,9 @@ class CustomerController extends Controller
         'updated_at' => Carbon::now()
     ];
 
-    // Update data customer
     DB::connection('mysql')->table('customers')->where('id', $id)->update($updateData);
-
-    // Ambil data customer yang sudah diupdate
     $updatedCustomer = DB::connection('mysql')->table('customers')->where('id', $id)->first();
 
-    // Kirim respon sukses
     return response()->json([
         'success' => true,
         'message' => 'Customer updated successfully',

@@ -110,9 +110,36 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'price' => 'nullable',
+        ]);
+    
+        $products = DB::connection('mysql')->table('products')->where('id', $id)->first();
+        
+        if (is_null($products)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'products not found',
+            ], 404);
+        }
+    
+        $updateData = [
+            'name' => $request->input('name', $products->name),
+            'price' => $request->input('price', $products->price),
+            'updated_at' => Carbon::now()
+        ];
+    
+        DB::connection('mysql')->table('products')->where('id', $id)->update($updateData);
+        $updateproducts = DB::connection('mysql')->table('products')->where('id', $id)->first();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'products updated successfully',
+            'data' => $updateproducts
+        ], 200);
     }
 
     /**
@@ -121,8 +148,20 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $products = DB::connection('mysql')->table('products')->where('id', $id)->first();
+        if (is_null($products)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'products Not Found',
+            ], 404);
+        }
+    
+        DB::connection('mysql')->table('products')->where('id', $id)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'products Deleted',
+        ], 200);
     }
 }
