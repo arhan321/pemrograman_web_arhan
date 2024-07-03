@@ -164,18 +164,18 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $product = DB::connection('mysql')->table('products')->where('id', $id)->first();
-        if (is_null($product)) {
+        $customers = DB::connection('mysql')->table('customers')->where('id', $id)->first();
+        if (is_null($customers)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product Not Found',
+                'message' => 'customers Not Found',
             ], 404);
         }
     
-        DB::connection('mysql')->table('products')->where('id', $id)->delete();
+        DB::connection('mysql')->table('customers')->where('id', $id)->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Product Deleted',
+            'message' => 'customers Deleted',
         ], 200);
     }
 }

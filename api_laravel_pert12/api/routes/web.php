@@ -34,6 +34,7 @@ $router->group(['prefix' => 'api/v1/customers','middleware' => 'auth'], function
     $router->post('/', ['uses' => 'CustomerController@store']);
     $router->get('/{id}', ['uses' => 'CustomerController@show']);
     $router->put('/{id}', ['uses' => 'CustomerController@update']);
+    $router->delete('/{id}', ['uses' => 'CustomerController@destroy']);
 });
 
 $router->group(['prefix' => 'api/v1/products','middleware' => 'auth'], function() use ($router){
