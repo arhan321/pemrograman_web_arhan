@@ -70,6 +70,32 @@ class CustomerController extends Controller
         ]);
     
         return response()->json(['success' => true, 'message' => 'Customer created successfully mantap'], 201);
+
+
+            //cara ke dua 
+    // $this->validate($request, [
+    //     'data.attributes.full_name' => 'required',
+    //     'data.attributes.username' => 'required',
+    //     'data.attributes.email' => ['required', 'email', Rule::unique('costumers','email')],
+    //     'data.attributes.phone_number' => 'required',
+    // ]);
+
+    // $data = new Costumer();
+    // $data->full_name = $request->input('data.attributes.full_name');
+    // $data->username = $request->input('data.attributes.username');
+    // $data->email = $request->input('data.attributes.email');
+    // $data->phone_number = $request->input('data.attributes.phone_number');
+    // $data->save();
+    
+    // return response()->json(
+    //     [
+    //         'success' => true,
+    //         'message' => 'Success Retrive Data',
+    //        // 'data' => $data
+    //         'data' => [
+    //             'attributes' => $data
+    //         ]
+    //     ]) ; 
     }
 
     /**
@@ -148,6 +174,7 @@ class CustomerController extends Controller
         'message' => 'Customer updated successfully',
         'data' => $updatedCustomer
     ], 200);
+
     }
 
     /**
