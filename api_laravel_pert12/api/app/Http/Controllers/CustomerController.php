@@ -102,10 +102,10 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
-    {
-        //
-    }
+    // public function edit(Customer $customer)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
