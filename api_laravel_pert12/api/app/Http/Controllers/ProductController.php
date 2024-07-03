@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -51,7 +53,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'price' => 'required',
+        ]);
+    
+        DB::connection('mysql')->table('products')->insert([
+            'name' => $request->name,
+            'price' => $request->price,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+    
+        return response()->json(['success' => true, 'message' => 'product created successfully mantap'], 201);
     }
 
     /**
@@ -60,9 +74,22 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = DB::connection('mysql')->table('products')->where('id', $id)->first();
+    
+        if (is_null($product)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'product not found',
+            ], 404);
+        }
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'product found',
+            'product' => $product
+        ], 200);
     }
 
     /**
