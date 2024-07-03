@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
@@ -128,9 +129,37 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    // public function edit(Customer $customer)
+    // public function edit(Request $request, $id)
     // {
-    //     //
+    //     $this->validate($request, [
+    //         'data.attributes.full_name' => 'required',
+    //         'data.attributes.username' => 'required',
+    //         'data.attributes.email' => ['required', 'email', Rule::unique('costumers','email')],
+    //         'data.attributes.phone_number' => 'required',
+    //     ]);
+
+    //     $data = Customer::find($id);
+
+    //     if ($data) {
+    //         $data->full_name = $request->input('data.attributes.full_name');
+    //         $data->username = $request->input('data.attributes.username');
+    //         $data->email = $request->input('data.attributes.email');
+    //         $data->phone_number = $request->input('data.attributes.phone_number');
+    //         $data->save();
+
+    //         return response()->json([
+    //             "success" => true,
+    //             "message" => "Success Updated",
+    //             "data" => [
+    //                 "attributes" => $data
+    //             ]
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Not Found',
+    //         ]);
+    //     }
     // }
 
     /**
