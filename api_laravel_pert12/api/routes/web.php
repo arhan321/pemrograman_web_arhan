@@ -49,14 +49,13 @@ $router->group(['prefix' => 'api/v1/order','middleware' => 'auth'], function() u
     $router->get('/', ['uses' => 'OrderController@index']);
 });
 
-
-// $router->group(['prefix' => 'api/v1/product', 'middleware' => 'auth'], function() use ($router) {
-//     $router->get('/', ['uses' => 'ProductController@index']);
-//     $router->post('/', ['uses' => 'ProductController@store']);
-//     $router->get('/{id}', ['uses' => 'ProductController@show']);
-//     $router->put('/{id}', ['uses' => 'ProductController@update']);
-//     $router->delete('/{id}', ['uses' => 'ProductController@destroy']);
-// });
+$router->group(['prefix' => 'api/v1/orderitem', 'middleware' => 'auth'], function() use ($router) {
+    $router->get('/', ['uses' => 'OrderitemController@index']);
+    $router->post('/', ['uses' => 'OrderitemController@store']);
+    $router->get('/{id}', ['uses' => 'OrderitemController@show']);
+    $router->put('/{id}', ['uses' => 'OrderitemController@update']);
+    $router->delete('/{id}', ['uses' => 'OrderitemController@destroy']);
+});
 
 // $router->group(['prefix' => 'api/v1/transaction', 'middleware' => 'auth'], function() use ($router) {
 //     $router->get('/', ['uses' => 'TransactionController@index']);
