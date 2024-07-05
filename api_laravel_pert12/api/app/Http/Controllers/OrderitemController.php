@@ -63,16 +63,16 @@ class OrderitemController extends Controller
     }
     
     
-    public function show($id){
+    public function showidjoin($id){
         $data = Orderitem::with(['order' => function($query) use ($id) {
             $query->where('id', $id);
         }])->where('order_id', $id)->get();
-    
+        
         if ($data->isEmpty()) {
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'products not found',
+                    'message' => 'orders not found',
                 ]
             );
         } else {

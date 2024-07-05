@@ -50,14 +50,18 @@ $router->group(['prefix' => 'api/v1/order','middleware' => 'auth'], function() u
 });
 
 $router->group(['prefix' => 'api/v1/orderitem', 'middleware' => 'auth'], function() use ($router) {
-    // $router->get('/', ['uses' => 'OrderitemController@index']);
-    $router->get('/join', ['uses' => 'OrderitemController@showdatajoin']);
+    $router->get('/', ['uses' => 'OrderitemController@index']);
     $router->post('/', ['uses' => 'OrderitemController@store']);
-    // $router->get('/{id}', ['uses' => 'OrderitemController@show']);
-    $router->get('/join/{id}', ['uses' => 'OrderitemController@show']);
+    $router->get('/{id}', ['uses' => 'OrderitemController@show']);
     $router->put('/{id}', ['uses' => 'OrderitemController@update']);
     $router->delete('/{id}', ['uses' => 'OrderitemController@destroy']);
 });
+
+$router->group(['prefix' => 'api/v1/orderitem-join', 'middleware' => 'auth'], function() use ($router) {
+    $router->get('/', ['uses' => 'OrderitemController@showdatajoin']);
+    $router->get('/{id}', ['uses' => 'OrderitemController@showidjoin']);
+});
+
 
 // $router->group(['prefix' => 'api/v1/transaction', 'middleware' => 'auth'], function() use ($router) {
 //     $router->get('/', ['uses' => 'TransactionController@index']);
