@@ -65,7 +65,7 @@ class ProductController extends Controller
             'updated_at' => Carbon::now(),
         ]);
     
-        return response()->json(['success' => true, 'message' => 'product created successfully mantap'], 201);
+        return response()->json(['success' => true, 'message' => 'product created successfully added'], 201);
     }
 
     /**

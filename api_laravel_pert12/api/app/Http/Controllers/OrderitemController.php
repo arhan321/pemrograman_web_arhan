@@ -27,8 +27,10 @@ class OrderitemController extends Controller
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'products retrieved data',
-                    'data' => $data,
+                    'message' => 'success retrieved data',
+                    'data' => [
+                        "attributess" => $data
+                    ]
                 ]
             );
         }

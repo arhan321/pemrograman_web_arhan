@@ -42,8 +42,8 @@ class OrderController extends Controller
         Log::info('Showing all order');
 
         return response()->json([
+            "success" => true,
             "message" => "Success retrieve data",
-            "status" => true,
             "data" => $data
         ]);
     }
