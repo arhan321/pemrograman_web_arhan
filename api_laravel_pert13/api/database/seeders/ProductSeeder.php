@@ -15,13 +15,25 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $timestamp = Carbon::now()->toDateString();
-        DB::table('products')->insert(
+        DB::table('products')->insert([
             [
-            'name' => 'book',
-            'price' => 50000,
-            'created_at' => $timestamp,
-            'updated_at' => $timestamp,
+                'name' => 'book',
+                'price' => 50000,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp,
+            ],
+            [
+                'name' => 'notebook',
+                'price' => 70000,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp,
+            ],
+            [
+                'name' => 'handphone',
+                'price' => 2500000,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp,
             ]
-    );
+        ]);
     }
 }

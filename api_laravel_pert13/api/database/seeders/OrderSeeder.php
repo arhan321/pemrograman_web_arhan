@@ -15,10 +15,18 @@ class OrderSeeder extends Seeder
     {
         $timstamp = \Carbon\Carbon::now()->toDateString();
         DB::table('orders')->insert([
+            [
             'customer_id' => '1',
             'status' => 'order pending',
             'created_at' => $timstamp,
             'updated_at' => $timstamp,
+            ],
+            [
+            'customer_id' => '2',
+            'status' => 'order pending',
+            'created_at' => $timstamp,
+            'updated_at' => $timstamp,
+            ],
         ]);
     }
 }
