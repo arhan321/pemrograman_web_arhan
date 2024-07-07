@@ -9,6 +9,8 @@ class Orderitem extends Model
     protected $connection = 'mysql';
     protected $table = 'orderitems';
 
+    protected $fillable = ['order_id', 'product_id', 'quantity'];
+
     public function order(){
         return $this->belongsTo(Order::class);
     }
