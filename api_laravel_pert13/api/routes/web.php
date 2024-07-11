@@ -66,6 +66,14 @@ $router->group(['prefix' => 'api/v1/orderitem-join', 'middleware' => 'auth'], fu
     $router->get('/{id}', ['uses' => 'OrderitemController@showidjoin']);
 });
 
+$router->group(['prefix' => 'api/v1/payment', 'middleware' => 'auth'], function() use ($router) {
+    $router->get('/', ['uses' => 'PaymentController@index']);
+    $router->post('/', ['uses' => 'PaymentController@store']);
+    $router->get('/{id}', ['uses' => 'PaymentController@show']);
+    $router->put('/{id}', ['uses' => 'PaymentController@edit']);
+    $router->delete('/{id}', ['uses' => 'PaymentController@destroy']);
+});
+
 
 // $router->group(['prefix' => 'api/v1/transaction', 'middleware' => 'auth'], function() use ($router) {
 //     $router->get('/', ['uses' => 'TransactionController@index']);

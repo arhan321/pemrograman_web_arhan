@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('order_id');
             $table->string('transaction_id');
-            $table->string('payment_type');
+            $table->enum('payment_type',['cash','online'])->default('online');
             $table->string('gross_amount');
-            $table->string('transaction_time');
+            $table->dateTime('transaction_time');
             $table->string('transaction_status');
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ services:
       - "33379:3306"
     volumes:
       - ./database/data:/var/lib/mysql
-      - ./conf.d:/etc/mysql/conf.d:ro
+      - ./database/conf.d:/etc/mysql/conf.d:ro
     environment:
       MYSQL_USER: Djony
       MYSQL_PASSWORD: Djony!!
