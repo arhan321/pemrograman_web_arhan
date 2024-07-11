@@ -76,7 +76,7 @@ chmod 777 -R storage/*
 ```
 composer create-project --prefer-dist laravel/lumen nama-proyek-anda
 ```
-# fix lumen jika lumen terkena masalah version : 
+# fix flipbox jika lumen terkena masalah version : 
 ```
 composer require --with-all-dependencies flipbox/lumen-generator
 ```
