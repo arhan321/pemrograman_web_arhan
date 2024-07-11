@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
+            $table->string('order_id');
             $table->string('transaction_id');
             $table->enum('payment_type',['cash','online'])->default('online');
             $table->string('gross_amount');

@@ -2,208 +2,174 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use Carbon\Carbon;
+use Midtrans\Snap;
+use Midtrans\Config;
 use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Date;
-use Symfony\Contracts\Service\Attribute\Required;
-use League\CommonMark\Extension\Attributes\Node\Attributes;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request; 
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        Config::$isProduction = false; 
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+    }
+
     public function index()
     {
-     
+        $payments = Payment::all();
+        return response()->json($payments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //versi 2 method store ramsey order id (uuid)
     public function store(Request $request)
     {
-        DB::beginTransaction();
-        try{
-            $validated->validator::make 
-            ($request,[
-                'data.attributes.order_id' => 'Required,exists:order_id',
-                'data.atrributes.payment_type'=>'Requiered'
-            ]);
-            if($validated->fails()){
-                return response()->json([
-                    'error'=>$validated->messages(),
-                    "code" =>400,
-                ]);
-            }
-        // $this->validate($request, [
-        //     'data.attributes.order.id' =>
-        //     'requiered|exists:orders,id',
-        //     'data.attributes. payment_type' =>'requiered'
-        // ]);
-        $order_id = $request->input('data.attributes.order_id');
-
-        // $CheckOrderPayment = Payment::where 
-
-        $order = Order::where('id',$order_id)->first(); 
-        if ($CheckOrderPayment){
-            return response()->json();
-        }
-        
-        $payment_type = $request->input('data.attributes.payment.order_id');
-        
-        $orderitem = $order->orderItem()->get();
-        $grosstotal = 0;
-        foreach ($orderitem as $key =>$item){
-            $grosstotal += $item->product()->first();
-        }
-
-        $payment = [
-        'order_id'=>$order_id,
-        'transaction_id'=>str::uuid(),
-        'gross_amount'=>$grosstotal,
-        'transaction_time'=>new Date(),
-        'transaction_status'=>'Succees'
+        $this->validate($request, [
+            'order_id' => 'required|integer',
+            'gross_amount' => 'required|string',
+        ]);
+    
+        $uniqueOrderId = $request->input('order_id') . '-' . Str::uuid();
+    
+        $transaction_details = [
+            'order_id' => $uniqueOrderId,
+            'gross_amount' => $request->input('gross_amount'),
         ];
-
-        payment::create($payment);
-        return response()->json([
-
-        ])->status(201);
-        }
-        catch (\Throwable $th) {
-            DB::rollBack();
-            return response()->json([
-                'error' => $th->getMessage(),
-                'code' => 500,
+    
+        $params = [
+            'transaction_details' => $transaction_details,
+            'customer_details' => [
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+            ],
+        ];
+    
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            $snapUrl = "https://app.sandbox.midtrans.com/snap/v2/vtweb/" . $snapToken; 
+            if (Config::$isProduction) {
+                $snapUrl = "https://app.midtrans.com/snap/v2/vtweb/" . $snapToken; 
+            }
+    
+            $payment = Payment::create([
+                'order_id' => $uniqueOrderId,
+                'transaction_id' => $snapToken,
+                'payment_type' => 'online',
+                'gross_amount' => $request->input('gross_amount'),
+                'transaction_time' => Carbon::now(),
+                'transaction_status' => 'pending',
             ]);
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $payment,
+                'snap_token' => $snapToken,
+                'snap_url' => $snapUrl 
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
-//     public function store(Request $request)
-// {
-//     DB::beginTransaction();
-//     try {
-//         // Validate the request data
-//         $validated = $request->validate([
-//             'data.attributes.order_id' => 'required|exists:orders,id',
-//             'data.attributes.payment_type' => 'required'
-//         ]);
+    //versi 1 
+    // public function store(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'order_id' => 'required|integer',
+    //         'gross_amount' => 'required|string',
+    //     ]);
 
-//         // Get the order_id from the request
-//         $order_id = $request->input('data.attributes.order_id');
+    //     $transaction_details = [
+    //         'order_id' => $request->input('order_id'),
+    //         'gross_amount' => $request->input('gross_amount'),
+    //     ];
 
-//         // Check if the order exists
-//         $order = Order::where('id', $order_id)->first();
+    //     $params = [
+    //         'transaction_details' => $transaction_details,
+    //         'customer_details' => [
+    //             'first_name' => $request->input('first_name'),
+    //             'last_name' => $request->input('last_name'),
+    //             'email' => $request->input('email'),
+    //             'phone' => $request->input('phone'),
+    //         ],
+    //     ];
 
-//         // Check if a payment for this order already exists
-//         $checkOrderPayment = Payment::where('order_id', $order_id)->exists();
-//         if ($checkOrderPayment) {
-//             return response()->json([
-//                 'error' => 'Payment for this order already exists.',
-//                 'code' => 400,
-//             ]);
-//         }
+    //     try {
+    //         $snapToken = Snap::getSnapToken($params);
+    //         $snapUrl = "https://app.sandbox.midtrans.com/snap/v2/vtweb/" . $snapToken; 
+    //         if (Config::$isProduction) {
+    //             $snapUrl = "https://app.midtrans.com/snap/v2/vtweb/" . $snapToken; 
+    //         }
+            
+    //         $payment = Payment::create([
+    //             'order_id' => $request->input('order_id'),
+    //             'transaction_id' => $snapToken,
+    //             'payment_type' => 'online',
+    //             'gross_amount' => $request->input('gross_amount'),
+    //             'transaction_time' => Carbon::now(),
+    //             'transaction_status' => 'pending',
+    //         ]);
 
-//         // Calculate the gross total from order items
-//         $orderItems = $order->orderItems()->get(); // Assuming the relationship method is named orderItems
-//         $grossTotal = 0;
-//         foreach ($orderItems as $item) {
-//             $grossTotal += $item->product()->first()->price; // Assuming the product has a price attribute
-//         }
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'data' => $payment,
+    //             'snap_token' => $snapToken,
+    //             'snap_url' => $snapUrl 
+    //         ], 201);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 
-//         // Prepare the payment data
-//         $payment = [
-//             'order_id' => $order_id,
-//             'transaction_id' => Str::uuid(),
-//             'gross_amount' => $grossTotal,
-//             'transaction_time' => now(), // Use now() for the current date and time
-//             'transaction_status' => 'Success'
-//         ];
-
-//         // Create the payment
-//         Payment::create($payment);
-
-//         // Commit the transaction
-//         DB::commit();
-
-//         // Return the success response
-//         return response()->json([
-//             'message' => 'Payment created successfully.',
-//             'payment' => $payment,
-//         ], 201);
-//     } catch (\Throwable $th) {
-//         // Rollback the transaction on error
-//         DB::rollBack();
-
-//         // Return the error response
-//         return response()->json([
-//             'error' => $th->getMessage(),
-//             'code' => 500,
-//         ]);
-//     }
-// }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $payment = Payment::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
+        }
+        return response()->json($payment);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Order $order)
+    public function edit(Request $request, $id)
     {
-        //
+        $payment = Payment::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
+        }
+
+        $this->validate($request, [
+            'order_id' => 'required|integer',
+            'gross_amount' => 'required|string',
+            'transaction_status' => 'required|string',
+        ]);
+
+        $payment->order_id = $request->input('order_id');
+        $payment->gross_amount = $request->input('gross_amount');
+        $payment->transaction_status = $request->input('transaction_status');
+        $payment->save();
+
+        return response()->json($payment);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Order $order)
-    {
-        //
+        $payment = Payment::find($id);
+        if (!$payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
+        }
+        $payment->delete();
+        return response()->json(['message' => 'Payment deleted successfully']);
     }
 }
