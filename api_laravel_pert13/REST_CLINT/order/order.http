@@ -12,3 +12,22 @@ Content-Type: {{cType}}
 GET {{baseUrl}}/api/v1/order/1
 Content-Type: {{cType}}
 {{token}}: {{value}}
+
+### post request order
+POST {{baseUrl}}/api/v1/order/
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+    "customer_id": "1",
+    "order_detail": [
+        {
+            "product_id": "1",
+            "quantity": "2"
+        },
+        {
+            "product_id": "2",
+            "quantity": "1"
+        }
+    ]
+}

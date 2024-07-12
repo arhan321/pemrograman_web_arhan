@@ -38,11 +38,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user_id' => 'required|exists:customers,id'
+            'customer_id' => 'required|exists:customers,id'
         ]);
-        
+
         $order = new Order();
-        $order->user_id = $request->input('user_id');
+        $order->customer_id = $request->input('customer_id');
         $order->status = "created";
         $order->save();
 

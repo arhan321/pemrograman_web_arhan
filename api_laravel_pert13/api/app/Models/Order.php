@@ -8,15 +8,15 @@ class Order extends Model
 {
     protected $connection = 'mysql';
     protected $table = 'orders';
-    // protected $fillable = ['customer_id','status'];
+    protected $fillable = ['customer_id', 'status'];
 
-
-    public function customer(){
-     return $this->belongsTo(Customer::class);
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 
-    public function orderitem(){
-        return $this->hasMany(Orderitem::class);
-       }
-
- }
+    public function orderitem()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+}
