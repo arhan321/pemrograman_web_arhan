@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Midtrans\Snap;
 use Midtrans\Config;
 use App\Models\Payment;
+use Midtrans\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request; 
 
@@ -79,8 +80,8 @@ class PaymentController extends Controller
             ], 500);
         }
     }
-
-    //versi 1 
+    
+  //versi 1 
     // public function store(Request $request)
     // {
     //     $this->validate($request, [
@@ -132,6 +133,49 @@ class PaymentController extends Controller
     //         ], 500);
     //     }
     // }
+
+    //cek payment status method
+    // public function updatePaymentStatus(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'order_id' => 'required|string',
+    //     ]);
+    
+    //     $orderId = $request->input('order_id');
+    
+    //     try {
+    //         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+    //         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+    
+    //         $status = Transaction::status($orderId);
+    //         $transactionStatus = $status->transaction_status;
+    
+    //         $payment = Payment::where('order_id', $orderId)->first();
+    
+    //         if (!$payment) {
+    //             return response()->json(['status' => 'error', 'message' => 'Payment not found'], 404);
+    //         }
+    
+    //         if ($transactionStatus == 'settlement' || $transactionStatus == 'capture') {
+    //             $payment->transaction_status = 'paid';
+    //         } else {
+    //             $payment->transaction_status = 'unpaid';
+    //         }
+    
+    //         $payment->save();
+    
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'data' => $payment,
+    //         ], 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+  
 
     public function show($id)
     {

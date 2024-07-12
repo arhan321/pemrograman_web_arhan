@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('payment_type',['cash','online'])->default('online');
             $table->string('gross_amount');
             $table->dateTime('transaction_time');
+            // $table->enum('transaction_status',['unpaid','paid'])->default('unpaid');
             $table->string('transaction_status');
             $table->timestamps();
         });

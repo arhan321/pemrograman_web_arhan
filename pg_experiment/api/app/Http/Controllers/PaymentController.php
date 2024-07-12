@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Midtrans\Snap;
 use Midtrans\Config;
 use App\Models\Payment;
+use Midtrans\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request; 
 
@@ -51,6 +52,11 @@ class PaymentController extends Controller
         ];
     
         try {
+            Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+            Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+            Config::$isSanitized = true;
+            Config::$is3ds = true;
+    
             $snapToken = Snap::getSnapToken($params);
             $snapUrl = "https://app.sandbox.midtrans.com/snap/v2/vtweb/" . $snapToken; 
             if (Config::$isProduction) {
@@ -63,8 +69,21 @@ class PaymentController extends Controller
                 'payment_type' => 'online',
                 'gross_amount' => $request->input('gross_amount'),
                 'transaction_time' => Carbon::now(),
-                'transaction_status' => 'pending',
+                'transaction_status' => 'pending', 
             ]);
+    
+            sleep(5);
+    
+            $status = Transaction::status($uniqueOrderId);
+            $transactionStatus = $status->transaction_status;
+    
+            if ($transactionStatus == 'settlement' || $transactionStatus == 'capture') {
+                $payment->transaction_status = 'payment processed';
+            } else {
+                $payment->transaction_status = 'pending';
+            }
+    
+            $payment->save();
     
             return response()->json([
                 'status' => 'success',
