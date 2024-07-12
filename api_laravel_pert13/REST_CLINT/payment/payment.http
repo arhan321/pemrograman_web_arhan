@@ -1,21 +1,22 @@
 @baseUrl = http://127.0.0.1
 @cType = application/json
-@password = password
+@token = password
+@value = password
 
 ### get request payment
 GET {{baseUrl}}/api/v1/payment/
 Content-Type: {{cType}}
-password: {{password}}
+{{token}}: {{value}}
 
 ### INI BUAT GET DATA payment BY ID
 GET {{baseUrl}}/api/v1/payment/1
 Content-Type: {{cType}}
-password: {{password}}
+{{token}}: {{value}}
 
 ### post request payment
 POST {{baseUrl}}/api/v1/payment/
 Content-Type: {{cType}}
-password: {{password}}
+{{token}}: {{value}}
 
 {
     "order_id": "5",
@@ -25,3 +26,23 @@ password: {{password}}
     "email": "john.doe@example.com",
     "phone": "081234567890"
 }
+
+### put request payment by ID
+PUT {{baseUrl}}/api/v1/payment/5
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+    "order_id": "5",
+    "gross_amount": "200000",
+    "first_name": "mawan ganteng",
+    "last_name": "alwahyu",
+    "email": "john.doe@example.com",
+    "transaction_status": "okehh",
+    "phone": "081234567890"
+}
+
+### delete request payment by ID
+DELETE {{baseUrl}}/api/v1/payment/1
+Content-Type: {{cType}}
+{{token}}: {{value}}

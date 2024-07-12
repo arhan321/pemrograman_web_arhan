@@ -1,0 +1,14 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@token = password
+@value = password
+
+### get request order
+GET {{baseUrl}}/api/v1/order/
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+### INI BUAT GET DATA order BY ID
+GET {{baseUrl}}/api/v1/order/1
+Content-Type: {{cType}}
+{{token}}: {{value}}
