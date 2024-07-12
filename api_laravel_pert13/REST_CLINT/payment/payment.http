@@ -1,0 +1,27 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@password = password
+
+### get request payment
+GET {{baseUrl}}/api/v1/payment/
+Content-Type: {{cType}}
+password: {{password}}
+
+### INI BUAT GET DATA payment BY ID
+GET {{baseUrl}}/api/v1/payment/1
+Content-Type: {{cType}}
+password: {{password}}
+
+### post request payment
+POST {{baseUrl}}/api/v1/payment/
+Content-Type: {{cType}}
+password: {{password}}
+
+{
+    "order_id": "5",
+    "gross_amount": "190000",
+    "first_name": "mawan ganteng",
+    "last_name": "alwahyu",
+    "email": "john.doe@example.com",
+    "phone": "081234567890"
+}

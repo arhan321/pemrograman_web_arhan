@@ -1,0 +1,32 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@password = password
+
+
+### get request products
+GET {{baseUrl}}/api/v1/products/
+Content-Type: {{cType}}
+Authorization: {{password}}
+
+### post request products
+POST {{baseUrl}}/api/v1/products/
+Content-Type: {{cType}}
+Authorization: {{password}}
+{
+    "name": "notebook",
+    "price": 10000
+}
+
+### put request products
+PUT {{baseUrl}}/api/v1/products/1
+Content-Type: {{cType}}
+Authorization: {{password}}
+{
+    "name": "notebook",
+    "price": 40000
+}
+
+### delete request products
+DELETE {{baseUrl}}/api/v1/products/1
+Content-Type: {{cType}}
+Authorization: {{password}}
