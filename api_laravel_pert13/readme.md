@@ -1,4 +1,4 @@
-# pert 13 membuat menambahkan payment dan REEST CLIENT
+# pert 13 membuat menambahkan payment dan REST CLIENT
 ```
 CREATE
 - payment -mcfs 
