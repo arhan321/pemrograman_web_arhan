@@ -49,7 +49,7 @@ $router->group(['prefix' => 'api/v1/order','middleware' => 'auth'], function() u
     $router->get('/', ['uses' => 'OrderController@index']);
     $router->post('/', ['uses' => 'OrderController@store']);
     $router->get('/{id}', ['uses' => 'OrderController@show']);
-    $router->put('/{id}', ['uses' => 'OrderController@update']);
+    $router->put('/{id}', ['uses' => 'OrderController@edit']);
     $router->delete('/{id}', ['uses' => 'OrderController@destroy']);
 });
 

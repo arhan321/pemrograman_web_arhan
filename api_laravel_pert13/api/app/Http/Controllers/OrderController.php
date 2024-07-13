@@ -3,29 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\Orderitem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
- 
     public function index()
     {
-        $data = Order::with('orderitem')->get();
-        if(!$data) {
-            return response()->json([
-                "message" => "Data Not Found"
-            ]);
+        $data = Order::with(array('Orderitem' => function($query){
+            $query->select();
+        }))->get();
+        if (!$data) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Customers not found',
+                ]
+            );
+        }else {
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Successfully retrieved data',
+                    'data' => $data,
+                ]
+            );
         }
-
-        Log::info('Showing all orders');
-
-        return response()->json([
-            "message" => "Success retrieve data",
-            "status" => true,
-            "data" => $data
-        ]);
     }
 
 
@@ -34,137 +38,126 @@ class OrderController extends Controller
         //
     }
 
-
+ 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'customer_id' => 'required|exists:customers,id'
+            'customer_id' => 'required|integer',
+            'status' => 'required|string',
+            'order_detail' => 'required|array',
+            'order_detail.*.product_id' => 'required|integer',
+            'order_detail.*.quantity' => 'required|integer',
         ]);
 
-        $order = new Order();
-        $order->customer_id = $request->input('customer_id');
-        $order->status = "created";
-        $order->save();
-
-        $order_detail = $request->input('order_detail');
-
-        foreach ($order_detail as $detail) {
-            $order_item = new OrderItem();
-            $order_item->order_id = $order->id;
-            $order_item->product_id = $detail['product_id'];
-            $order_item->quantity = $detail['quantity'];
-            $order->orderitem()->save($order_item);
-        }
-
-        Log::info('Adding order');
-
-        return response()->json([
-            "message" => "Success Added",
-            "status" => true,
-            "data" => $order
+        $order = Order::create([
+            'customer_id' => $request->input('customer_id'),
+            'status' => $request->input('status'),
         ]);
-    }
 
-
-    public function show($id)
-    {
-        $data = Order::with('orderitem')->find($id);
-        if(!$data) {
-            return response()->json([
-                "message" => "Parameter Not Found"
+        foreach ($request->input('order_detail') as $detail) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $detail['product_id'],
+                'quantity' => $detail['quantity'],
             ]);
         }
 
-        Log::info('Showing order by id');
-
         return response()->json([
-            "message" => "Success retrieve data",
-            "status" => true,
-            "data" => $data
-        ]);
+            'success' => true,
+            'message' => 'Order created successfully',
+            'data' => $order,
+        ], 201);
+    }
+
+    public function update()
+    {
+        //
     }
 
     public function edit(Request $request, $id)
     {
         $this->validate($request, [
-            'user_id' => 'required|exists:customers,id'
+            'customer_id' => 'required|integer',
+            'status' => 'required|string',
+            'order_detail' => 'required|array',
+            'order_detail.*.product_id' => 'required|integer',
+            'order_detail.*.quantity' => 'required|integer',
         ]);
-        
+
         $order = Order::find($id);
-        if ($order) {
-            $order->user_id = $request->input('user_id');
-            $order->status = "created";
-            $order->save();
 
-            $order_detail = $request->input('order_detail');
-
-            foreach ($order_detail as $detail) {
-                $order_item = OrderItem::where('order_id', $id)->first();
-                $order_item->product_id = $detail['product_id'];
-                $order_item->quantity = $detail['quantity'];
-                $order->orderitem()->save($order_item);
-            }
-
-            Log::info('Updating order by id');
-
+        if (is_null($order)) {
             return response()->json([
-                "message" => "Success Updated",
-                "status" => true,
-                "data" => $order
-            ]);        
-        } else {
-            return response()->json([
-                "message" => "Parameter Not Found"
-            ]);
+                'success' => false,
+                'message' => 'Order not found',
+            ], 404);
         }
-    }
 
-    public function update(Request $request, Order $order)
-    {
-        $this->validate($request, [
-            'user_id' => 'required|exists:customers,id'
+        $order->update([
+            'customer_id' => $request->input('customer_id'),
+            'status' => $request->input('status'),
         ]);
-        
-        $order->user_id = $request->input('user_id');
-        $order->status = "updated";
-        $order->save();
 
-        $order_detail = $request->input('order_detail');
+        foreach ($request->input('order_detail') as $detail) {
+            $orderItem = OrderItem::where('order_id', $id)
+                ->where('product_id', $detail['product_id'])
+                ->first();
 
-        foreach ($order_detail as $detail) {
-            $order_item = OrderItem::where('order_id', $order->id)->first();
-            $order_item->product_id = $detail['product_id'];
-            $order_item->quantity = $detail['quantity'];
-            $order->orderitem()->save($order_item);
+            if ($orderItem) {
+                $orderItem->update([
+                    'quantity' => $detail['quantity'],
+                ]);
+            } else {
+                OrderItem::create([
+                    'order_id' => $id,
+                    'product_id' => $detail['product_id'],
+                    'quantity' => $detail['quantity'],
+                ]);
+            }
         }
-
-        Log::info('Updating order');
 
         return response()->json([
-            "message" => "Success Updated",
-            "status" => true,
-            "data" => $order
-        ]);
+            'success' => true,
+            'message' => 'Order updated successfully',
+            'data' => $order,
+        ], 200);
+    }
+    
+    public function show($id)
+    {
+        $order = Order::with('orderitem')->find($id);
+
+        if (is_null($order)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully retrieved data',
+            'data' => $order,
+        ], 200);
     }
 
     public function destroy($id)
     {
         $order = Order::find($id);
-        if($order) {
-            $order->delete();
-            OrderItem::where('order_id', $id)->delete();
 
-            Log::info('Deleting order by id');
-
+        if (is_null($order)) {
             return response()->json([
-                "message" => "Success Deleted",
-                "status" => true,
-                "data" => $order
-            ]);   
-        } else {
-            return response()->json([
-                "message" => "Parameter Not Found"
-            ]);
+                'success' => false,
+                'message' => 'Order not found',
+            ], 404);
         }
+
+        $order->delete();
+        OrderItem::where('order_id', $id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order deleted successfully',
+        ], 200);
     }
 }

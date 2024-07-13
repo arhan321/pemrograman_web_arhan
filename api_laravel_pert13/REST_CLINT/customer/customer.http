@@ -1,32 +1,45 @@
 @baseUrl = http://127.0.0.1
 @cType = application/json
-@password = password
+@token = password
+@value = password
 
+### ROUTE API CUSTOMERS
 
-### get request products
-GET {{baseUrl}}/api/v1/products/
+### get request customers
+GET {{baseUrl}}/api/v1/customers/
 Content-Type: {{cType}}
-Authorization: {{password}}
+{{token}}: {{value}}
 
-### post request products
-POST {{baseUrl}}/api/v1/products/
+### INI BUAT GET DATA customers BY ID
+GET {{baseUrl}}/api/v1/customers/1
 Content-Type: {{cType}}
-Authorization: {{password}}
+{{token}}: {{value}}
+
+### post request customers
+POST {{baseUrl}}/api/v1/customers/
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
 {
-    "name": "notebook",
-    "price": 10000
+    "full_name": "John Doe",
+    "username": "johndoe",
+    "email": "johndoe@example.com",
+    "phone_number": "1234567890"
 }
 
-### put request products
-PUT {{baseUrl}}/api/v1/products/1
+### put request customers by ID
+PUT {{baseUrl}}/api/v1/customers/1
 Content-Type: {{cType}}
-Authorization: {{password}}
+{{token}}: {{value}}
+
 {
-    "name": "notebook",
-    "price": 40000
+    "full_name": "johniiii doe",
+    "username": "johndoe",
+    "email": "johnniiiidoee@gmail.com",
+    "phone_number": "1234567890"
 }
 
-### delete request products
-DELETE {{baseUrl}}/api/v1/products/1
+### delete request customers by ID
+DELETE {{baseUrl}}/api/v1/customers/1
 Content-Type: {{cType}}
-Authorization: {{password}}
+{{token}}: {{value}}

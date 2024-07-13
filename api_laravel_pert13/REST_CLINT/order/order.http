@@ -3,31 +3,53 @@
 @token = password
 @value = password
 
-### get request order
-GET {{baseUrl}}/api/v1/order/
+### ROUTE API ORDER
+
+### Get all orders
+GET {{baseUrl}}/api/v1/order
 Content-Type: {{cType}}
 {{token}}: {{value}}
 
-### INI BUAT GET DATA order BY ID
-GET {{baseUrl}}/api/v1/order/1
-Content-Type: {{cType}}
-{{token}}: {{value}}
 
-### post request order
-POST {{baseUrl}}/api/v1/order/
+### Create a new order
+POST {{baseUrl}}/api/v1/order
 Content-Type: {{cType}}
 {{token}}: {{value}}
 
 {
-    "customer_id": "1",
+    "customer_id": 2,
+    "status": "order pending",
     "order_detail": [
         {
-            "product_id": "1",
-            "quantity": "2"
-        },
-        {
-            "product_id": "2",
-            "quantity": "1"
+            "product_id": 1,
+            "quantity": 2
         }
     ]
 }
+
+
+### Update an order by ID
+PUT {{baseUrl}}/api/v1/order/2
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+    "customer_id": "2",
+     "status": "order pending",
+    "order_detail": [
+        {
+            "product_id": "1",
+            "quantity": "10"
+        }
+    ]
+}
+
+### Get order by ID
+GET {{baseUrl}}/api/v1/order/1
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+### Delete an order by ID
+DELETE {{baseUrl}}/api/v1/order/2
+Content-Type: {{cType}}
+{{token}}: {{value}}

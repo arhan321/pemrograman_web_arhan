@@ -3,6 +3,8 @@
 @token = password
 @value = password
 
+### ROUTE API PAYMENT
+
 ### get request payment
 GET {{baseUrl}}/api/v1/payment/
 Content-Type: {{cType}}

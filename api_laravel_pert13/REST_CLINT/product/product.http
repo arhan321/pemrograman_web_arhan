@@ -3,13 +3,10 @@
 @token = password
 @value = password
 
+### ROUTE API PRODUCT
+
 ### get request product
 GET {{baseUrl}}/api/v1/products/
-Content-Type: {{cType}}
-{{token}}: {{value}}
-
-### INI BUAT GET DATA PRODUCT BY ID
-GET {{baseUrl}}/api/v1/products/1
 Content-Type: {{cType}}
 {{token}}: {{value}}
 
@@ -20,21 +17,26 @@ Content-Type: {{cType}}
 password: {{value}}
 
 {
-    "name": "laptop asus rog",
-    "price": 70000      
+    "name": "asus-rog",
+    "price": 70000
 }
 
 ### put request product
-PUT {{baseUrl}}/api/v1/products/1
+PUT {{baseUrl}}/api/v1/products/4
 Content-Type: {{cType}}
 {{token}}: {{value}}
 
 {
-    "name": "notebook",
-    "price": 40000
+     "name": "asus-rog",
+     "price": 90000
 }
 
+### INI BUAT GET DATA PRODUCT BY ID
+GET {{baseUrl}}/api/v1/products/1
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
 ### delete request product
-DELETE {{baseUrl}}/api/v1/products/1
+DELETE {{baseUrl}}/api/v1/products/4
 Content-Type: {{cType}}
 {{token}}: {{value}}
