@@ -21,12 +21,12 @@ class OrderSeeder extends Seeder
             'created_at' => $timstamp,
             'updated_at' => $timstamp,
             ],
-            // [
-            // 'customer_id' => '2',
-            // 'status' => 'order pending',
-            // 'created_at' => $timstamp,
-            // 'updated_at' => $timstamp,
-            // ],
+            [
+            'customer_id' => '2',
+            'status' => 'order pending',
+            'created_at' => $timstamp,
+            'updated_at' => $timstamp,
+            ],
         ]);
     }
 }
