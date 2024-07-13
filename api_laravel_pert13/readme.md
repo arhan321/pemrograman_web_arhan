@@ -10,7 +10,7 @@ CREATE
 composer requiere midtrans/midtrans-php
 ```
 
-# tambahin app file nya 
+# tambahin config pada app file nya 
 ```plaintext
 |-- app
 |   |-- config
