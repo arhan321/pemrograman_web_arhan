@@ -1,0 +1,55 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@token = password
+@value = password
+
+### ROUTE API ORDER
+
+### Get all orders
+GET {{baseUrl}}/api/v1/order
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+
+### Create a new order
+POST {{baseUrl}}/api/v1/order
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+    "customer_id": 2,
+    "status": "order pending",
+    "order_detail": [
+        {
+            "product_id": 1,
+            "quantity": 2
+        }
+    ]
+}
+
+
+### Update an order by ID
+PUT {{baseUrl}}/api/v1/order/2
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+    "customer_id": "2",
+     "status": "order pending",
+    "order_detail": [
+        {
+            "product_id": "1",
+            "quantity": "10"
+        }
+    ]
+}
+
+### Get order by ID
+GET {{baseUrl}}/api/v1/order/1
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+### Delete an order by ID
+DELETE {{baseUrl}}/api/v1/order/2
+Content-Type: {{cType}}
+{{token}}: {{value}}

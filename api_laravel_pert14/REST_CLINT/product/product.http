@@ -1,0 +1,42 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@token = password
+@value = password
+
+### ROUTE API PRODUCT
+
+### get request product
+GET {{baseUrl}}/api/v1/products/
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+
+### post request product
+POST {{baseUrl}}/api/v1/products/
+Content-Type: {{cType}}
+password: {{value}}
+
+{
+    "name": "asus-rog",
+    "price": 70000
+}
+
+### put request product
+PUT {{baseUrl}}/api/v1/products/4
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+{
+     "name": "asus-rog",
+     "price": 90000
+}
+
+### INI BUAT GET DATA PRODUCT BY ID
+GET {{baseUrl}}/api/v1/products/1
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+### delete request product
+DELETE {{baseUrl}}/api/v1/products/4
+Content-Type: {{cType}}
+{{token}}: {{value}}

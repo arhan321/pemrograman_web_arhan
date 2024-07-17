@@ -1,0 +1,12 @@
+@baseUrl = http://127.0.0.1
+@cType = application/json
+@token = password
+@value = password
+
+### get request product
+GET {{baseUrl}}/api/v1/testing/
+Content-Type: {{cType}}
+{{token}}: {{value}}
+
+
+
