@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $query = DB::connection('mysql')->table('users')->get();

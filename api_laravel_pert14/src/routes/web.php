@@ -48,6 +48,7 @@ $router->group(['prefix' => 'api/v1/order','middleware'=>'auth'], function() use
     $router->put('/{id}', ['uses' => 'OrderController@edit']);
     $router->delete('/{id}', ['uses' => 'OrderController@destroy']);
 });
+
 $router->group(['prefix' => 'api/v1/payment','middleware'=>'auth'], function() use ($router){
     $router->get('/', ['uses' => 'PaymentController@index']);
     $router->post('/', ['uses' => 'PaymentController@store']);
