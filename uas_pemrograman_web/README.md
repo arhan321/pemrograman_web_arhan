@@ -32,6 +32,6 @@ langkah langkah saya dalam membuat fitur.
 # Dosen terhormat
 terimakasih yang sebesar besarnya untuk :  
  `JEFRY SUNUPURWA ASRI S.kom, M.kom`
-
+# ======== TERIMAKASIH =========
 
 HAPPY CODDING !!!!
