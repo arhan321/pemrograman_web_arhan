@@ -1,7 +1,7 @@
 # Arhan malik alrasyid (20220801151) 
 sistem `CRUD` untuk menunjang `Showroom Mobil` 
 
-karena disini saya memakai src-template, jadinya saya tidak mulai dari composer create-project larave/laravel .
+karena disini saya memakai src-template, jadinya saya tidak mulai dari composer create-project laravel/laravel .
 langkah langkah saya dalam membuat fitur. 
 1. composer update
 1. langkah pertama atur di bagian .env
